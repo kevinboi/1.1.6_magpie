@@ -31,36 +31,37 @@ public class Magpie2
     public String getResponse(String statement)
     {
         String response = "";
-        if (statement.indexOf("no") >= 0)
+        if (findKeyword(statement, "no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("dog") >= 0
-                || statement.indexOf("cat") >= 0)
+        else if (findKeyword(statement, "dog") >= 0
+                || findKeyword(statement, "cat") >= 0)
         {
             response = "Tell me more about your pets.";
         }
-        else if (statement.indexOf("Mr. Kaehms") >= 0)
+        else if (findKeyword(statement, "Mr. Kaehms") >= 0)
         {
             response = "He sounds like a good teacher.";
         }
-        else if (statement.indexOf("hobby") >= 0
-                || statement.indexOf("hobbies") >= 0)
+        else if (findKeyword(statement, "hobby") >= 0
+                || findKeyword(statement, "hobbies") >= 0)
         {
             response = "What are some of your hobbies?";
         }
-        else if (statement.indexOf("food") >= 0)
+        else if (findKeyword(statement, "food") >= 0)
         {
             response = "What is your favorite food?";
         }
-        else if (statement.indexOf("sport") >= 0)
+        else if (findKeyword(statement, "sport") >= 0
+                || findKeyword(statement, "sports") >= 0)
         {
             response = "What sports do you like to play?";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findKeyword(statement, "mother") >= 0
+                || findKeyword(statement, "father") >= 0
+                || findKeyword(statement, "sister") >= 0
+                || findKeyword(statement, "brother") >= 0)
         {
             response = "Tell me more about your family.";
         }
@@ -110,7 +111,48 @@ public class Magpie2
         {
             response = "That is very cool.";
         }
+        return response;
+    }
+    
+    // PLTW 1.1.6 Part C start
+    private int findKeyword(String statement, String goal,
+    int startPos)
+    {
+        String phrase = statement.trim();
+        int psn = phrase.toLowerCase().indexOf(
+                goal.toLowerCase(), startPos);while (psn >= 0)
+        {
+            String before = " ", after = " ";
+            if (psn > 0)
+            {
+                before = phrase.substring(psn - 1, psn)
+                .toLowerCase();
+            }
+            if (psn + goal.length() < phrase.length())
+            {
+                after = phrase.substring(
+                    psn + goal.length(),
+                    psn + goal.length() + 1)
+                .toLowerCase();
+            }
 
-		return response;
-	}
+            if (((before.compareTo("a") < 0) || (before
+                    .compareTo("z") > 0))
+            && ((after.compareTo("a") < 0) || (after
+                    .compareTo("z") > 0)))
+            {
+                return psn;
+            }
+            psn = phrase.indexOf(goal.toLowerCase(),
+                psn + 1);
+
+        }
+        return -1;
+    }
+                
+    private int findKeyword(String statement, String goal)
+    {
+        return findKeyword(statement, goal, 0);
+    }
+    // PLTW 1.1.6 Part C start
 }
