@@ -28,6 +28,8 @@ public class Magpie2
      *            the user statement
      * @return a response based on the rules given
      */
+    
+    // changed all else-if statements to use the findKeyword method
     public String getResponse(String statement)
     {
         String response = "";
@@ -154,5 +156,5 @@ public class Magpie2
     {
         return findKeyword(statement, goal, 0);
     }
-    // PLTW 1.1.6 Part C start
+    // PLTW 1.1.6 Part C end
 }
